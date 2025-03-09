@@ -2,7 +2,7 @@
 
 ## 1、介绍
 
-本项目属于大模型RAG任务，使用现有的车主手册构建知识库，然后选择知识库中的相关知识用于辅助大模型生成。整个方案的构建流程主要分为三大部分：构建知识库、知识检索、答案生成。该项目主要结合了 LLM、L angchain、提示工程、优化知识库结构和检索生成流程、vllm 推理优化框架等技术。
+本项目属于大模型RAG任务，使用现有的车主手册构建知识库，然后选择知识库中的相关知识用于辅助大模型生成。整个方案的构建流程主要分为三大部分：构建知识库、知识检索、答案生成。该项目主要结合了 LLM、Langchain、提示工程、优化知识库结构和检索生成流程、vllm 推理优化框架等技术。
 ## 2、下载源码与环境安装（Linux）
 
 ```
@@ -23,29 +23,29 @@ pip install -r requirements.txt
 ```text
 .
 ├── benchmark
-	└── bench_data.json              # 基准测试数据
-    └── benchmark.py                 # 基座测试
-    └── model_server.py              # 模型服务
+    └── bench_data.json              # 基准测试数据
+    └── benchmark.py                 # 基座测试
+    └── model_server.py              # 模型服务
 ├── data
-    └── gold_result.jsonn            # 标准答案数据集     
-    └── test_question.json           # 测试数据集 
-    └── car_user_manual.pdf          # 汽车用户手册文件
+    └── gold_result.jsonn            # 标准答案数据集     
+    └── test_question.json           # 测试数据集 
+    └── car_user_manual.pdf          # 汽车用户手册文件
 ├── images 
 ├── models                           # 基座大语言模型
-	└── Baichuan2-7B-Chat        
-    └── chatglm3-6b
-	└── Qwen2-7B-Instruct        
+    └── Baichuan2-7B-Chat        
+    └── chatglm3-6b
+    └── Qwen2-7B-Instruct        
 ├── pre_train_model 
-	└── bce-reranker-base_v1         # bce重排序模型
-	└── bge-reranker-large           # bge重排序模型 
-    └── bge-m3                       # bge文本嵌入模型
-    └── m3e-large                    # m3e文本嵌入模型 
-	└── text2vec-base-chinese        # 相似度模型     
+    └── bce-reranker-base_v1         # bce重排序模型
+    └── bge-reranker-large           # bge重排序模型 
+    └── bge-m3                       # bge文本嵌入模型
+    └── m3e-large                    # m3e文本嵌入模型 
+    └── text2vec-base-chinese        # 相似度模型     
 ├── retriever
-	└── bge_retriever.py             # bge召回    
-    └── bm25_retriever.py            # bm25召回      
-    └── m3e_retriever.py             # m3e召回
-    └── tfidf_retriever.py           # tf-idf召回
+    └── bge_retriever.py             # bge召回    
+    └── bm25_retriever.py            # bm25召回      
+    └── m3e_retriever.py             # m3e召回
+    └── tfidf_retriever.py           # tf-idf召回
 ├── .env                             # API 密钥
 ├── config.py                        # 配置文件
 ├── pdf_parse.py                     # pdf文档解析器
@@ -64,7 +64,7 @@ pip install -r requirements.txt
 
 ### 3.1 基于大模型的文档检索问答
 
-任务：项目要求以大模型为中心制作一个问答系统，回答用户的汽车相关问题。需要根据问题，在文档中定位相关信息的位置，并根据文档内容通过大模型生成相应的答案。本项目涉及的问题主要围绕汽车使用、维修、保养等方面，具体可参考下面的例子：
+该项目主要以大模型为中心制作一个问答系统，回答用户的汽车相关问题。需要根据问题，在文档中定位相关信息的位置，并根据文档内容通过大模型生成相应的答案。本项目涉及的问题主要围绕汽车使用、维修、保养等方面，具体可参考下面的例子：
 
 ```text
 问题1：怎么打开危险警告灯？
