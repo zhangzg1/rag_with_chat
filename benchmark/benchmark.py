@@ -85,7 +85,7 @@ class BenchMarkRunner:
 # 主函数
 def main():
     # 并发任务数量
-    concurrency = 2
+    concurrency = 10
     logger.info("Preparing for benchmark.")
 
     # 加载测试数据

@@ -1,8 +1,6 @@
 import json
 import time
 from tqdm import tqdm
-from langchain import PromptTemplate
-from langchain.chains import RetrievalQA
 from vllm_model import ChatLLM
 from chatgpt_proxy import ChatGPTProxy
 from rerank_model import reRankLLM
@@ -10,12 +8,6 @@ from retriever.m3e_retriever import M3eRetriever
 from retriever.bge_retriever import BgeRetriever
 from retriever.bm25_retriever import Bm25Retriever
 from retriever.tfidf_retriever import TfidfRetriever
-
-
-# 获取Langchain的工具链
-def get_qa_chain(llm, vector_store, prompt_template):
-    prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
-    return RetrievalQA.from_llm(llm=llm, retriever=vector_store.as_retriever(search_kwargs={"k": 10}), prompt=prompt)
 
 
 # 获取输入模版
@@ -78,13 +70,6 @@ def get_emb_distribute_rerank(rerank_model, m3e_context, bge_context, bm25_conte
         rerank_text = rerank_text + doc.page_content
     mutil_rerank_prompt_template = get_prompt_template(rerank_text, query)
     return mutil_rerank_prompt_template
-
-
-# 构建问答链
-def question(text, llm, vector_store, prompt_template):
-    chain = get_qa_chain(llm, vector_store, prompt_template)
-    response = chain({"query": text})
-    return response
 
 
 # 对测试数据集进行rag评测

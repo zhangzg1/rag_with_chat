@@ -21,7 +21,7 @@ class ChatRequest(BaseModel):
 
 
 # 全局变量
-model_path = "/home/zhangzg/models/Qwen2-7B-Instruct"
+model_path = "../models/Qwen2-7B-Instruct"
 llm = None
 sampling_params = SamplingParams(temperature=0, max_tokens=64, top_k=1)
 
