@@ -1,0 +1,14 @@
+accelerate==0.29.3
+faiss-gpu==1.7.2
+jieba==0.42.1
+langchain==0.1.16
+langchain-community==0.0.34
+modelscope==1.17.1
+pdfplumber==0.11.0
+PyPDF2==3.0.1
+rank-bm25==0.2.2
+sentence-transformers==2.7.0
+text2vec==1.2.9
+transformers==4.40.2
+torch==2.1.2
+vllm==0.4.0.post1
