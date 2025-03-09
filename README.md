@@ -81,7 +81,7 @@ pip install -r requirements.txt
 
 这里的训练数据集主要是一本汽车的用户手册（pdf文件）：
 
-[](images/image_fChhMjnifo.png)
+![image](https://github.com/zhangzg1/rag_with_chat/blob/main/images/image_fChhMjnifo.png)
 
 测试集问题示例：
 
@@ -104,7 +104,7 @@ pip install -r requirements.txt
 
 ### 4.1 pdf解析
 
-[](images/image_RiYKWHwtQa.png)
+![image](https://github.com/zhangzg1/rag_with_chat/blob/main/images/image_RiYKWHwtQa.png)
 
 对于 pdf 文件中这里类似的文本内容，该项目最终采用了三种解析方案的综合：
 
@@ -127,7 +127,7 @@ pip install -r requirements.txt
 
 Reranker 是信息检索生态系统中的一个重要组成部分，用于评估搜索结果，并进行重新排序，从而提升查询结果相关性。在 RAG 应用中，主要在拿到召回结果后使用 Reranker，能够更有效地确定文档和查询之间的语义相关性，更精细地对结果重排，最终提高搜索质量。将 Reranker 整合到 RAG 应用中可以显著提高生成答案的精确度，因为 Reranker 能够在单路或多路的召回结果中挑选出和问题最接近的文档。此外，扩大检索结果的丰富度（例如多路召回）配合精细化筛选最相关结果（Reranker）还能进一步提升最终结果质量。使用 Reranker 可以排除掉第一层召回中和问题关系不大的内容，将输入给大模型的上下文范围进一步缩小到最相关的一小部分文档中。通过缩短上下文， LLM 能够更“关注”上下文中的所有内容，避免忽略重点内容，还能节省推理成本。
 
-[](images/image_tL0rUhQiZB.png)
+![image](https://github.com/zhangzg1/rag_with_chat/blob/main/images/image_tL0rUhQiZB.png)
 
 上图为增加了 Reranker 的 RAG 应用架构。可以看出，这个检索系统包含两个阶段：
 
