@@ -37,7 +37,7 @@ parser.add_argument('--pdf_path', default="./data/car_user_manual.pdf", type=str
 parser.add_argument('--test_path', default="./data/test_question.json", type=str,
                     help='The path to the test dataset')
 
-parser.add_argument('--predict_path', default="./data/predict_result_1.json", type=str,
+parser.add_argument('--predict_path', default="./data/result.json", type=str,
                     help='The storage path for the prediction results')
 
 parser.add_argument('--gold_path', default="./data/gold_result.json", type=str,
@@ -46,7 +46,7 @@ parser.add_argument('--gold_path', default="./data/gold_result.json", type=str,
 parser.add_argument('--simModel_path', default=SimModel_path, type=str,
                     help='The similarity model used for calculating scores')
 
-parser.add_argument('--metric_path', default="./data/metrics_1.json", type=str,
+parser.add_argument('--metric_path', default="./data/metrics.json", type=str,
                     help='The storage path for evaluation metric data')
 
 parser.add_argument('--data_path', default="./all_text.txt", type=str,
