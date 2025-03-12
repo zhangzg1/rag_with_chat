@@ -17,6 +17,9 @@ conda activate rag_with_chat
 
 # 安装其他依赖包
 pip install -r requirements.txt
+
+# 选择docker容器化部署（需要先将模型下载到本地）
+docker build -t rag_with_chat:latest .
 ```
 
 ## 3、代码结构
