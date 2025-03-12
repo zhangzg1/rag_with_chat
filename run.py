@@ -19,6 +19,9 @@ parser.add_argument('--m3e_embeddings_model', default=M3E_embeddings_model_path,
 parser.add_argument('--bge_embeddings_model', default=BGE_embeddings_model_path, type=str,
                     help='The path to the text embedding model for recall used by BGE')
 
+parser.add_argument('--prompt_enhance', default=True, type=str,
+                    help='Choose to optimize the prompt')
+
 parser.add_argument('--single_max_length', default=4000, type=int,
                     help='The maximum text length for single-path recall')
 
@@ -71,6 +74,7 @@ if __name__ == '__main__':
         bge_embeddings_model_path=args.bge_embeddings_model,
         test_path=args.test_path,
         output_path=args.predict_path,
+        prompt_enhance=args.prompt_enhance,
         single_max_length=args.single_max_length,
         single_top_k=args.single_top_k,
         mutil_max_length=args.mutil_max_length,

@@ -74,7 +74,7 @@ def get_emb_distribute_rerank(rerank_model, m3e_context, bge_context, bm25_conte
 
 # 对测试数据集进行rag评测
 def question_test(model_name=None, reranker_name=None, m3e_embeddings_model_path=None, bge_embeddings_model_path=None,
-                  pdf_path=None, test_path=None, output_path=None, data_path=None, m3e_vector_path=None,
+                  pdf_path=None, test_path=None, output_path=None, data_path=None, m3e_vector_path=None, prompt_enhance=True,
                   bge_vector_path=None, single_max_length=4000, single_top_k=6, mutil_max_length=4000, mutil_top_k=6):
     start = time.time()
 
@@ -83,8 +83,9 @@ def question_test(model_name=None, reranker_name=None, m3e_embeddings_model_path
     bge_retriever = BgeRetriever(bge_embeddings_model_path, data_path, bge_vector_path, pdf_path)
     print("bge_retriever load ok")
     bm25 = Bm25Retriever(data_path, pdf_path)
-    tfidf = TfidfRetriever(data_path, pdf_path)
     print("bm25 load ok")
+    tfidf = TfidfRetriever(data_path, pdf_path)
+    print("tf-idf load ok")
 
     # LLM大模型
     if "gpt" in model_name:
@@ -103,12 +104,17 @@ def question_test(model_name=None, reranker_name=None, m3e_embeddings_model_path
         print(len(jdata))
         for idx, line in tqdm(enumerate(jdata), total=len(jdata)):
             query = line["question"]
+            retriever_query = query
+            if prompt_enhance:
+                prompt = "请简洁地回答下面的问题，只需要输出答案，不要重复问题，不允许在答案中添加编造成分，注意输出内容控制在16个字以内。\n问题：" + query
+                answer = llm.infer([prompt])
+                retriever_query = query + answer[0]
 
             # 召回文档
-            m3e_context = m3e_retriever.GetTopK(query, 15)
-            bge_context = bge_retriever.GetTopK(query, 15)
-            bm25_context = bm25.GetBM25TopK(query, 15)
-            tfidf_context = tfidf.GetBM25TopK(query, 15)
+            m3e_context = m3e_retriever.GetTopK(retriever_query, 15)
+            bge_context = bge_retriever.GetTopK(retriever_query, 15)
+            bm25_context = bm25.GetBM25TopK(retriever_query, 15)
+            tfidf_context = tfidf.GetBM25TopK(retriever_query, 15)
 
             # 重排文档
             m3e_inputs, m3e_min_score = get_emb_docs(m3e_context, query, max_length=single_max_length,
@@ -130,7 +136,6 @@ def question_test(model_name=None, reranker_name=None, m3e_embeddings_model_path
             batch_input.append(tfidf_inputs)
             # 执行batch推理
             batch_output = llm.infer(batch_input)
-            print(batch_input[3])
             line["answer_1"] = batch_output[0]     # 多路召回重排序后的结果
             line["answer_2"] = batch_output[1]     # m3e召回的结果
             line["answer_3"] = batch_output[2]     # bge召回的结果
